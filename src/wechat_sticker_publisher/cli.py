@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from . import __version__
+from . import skills
 from .imaging import inspect_image
 from .metadata import EXTENSIONS, ConfigError, albums, initialize, project_path
 from .packaging import build, markdown_report
@@ -55,6 +56,20 @@ def parser() -> argparse.ArgumentParser:
     views = assets.add_subparsers(dest="view", required=True)
     for name in ("missing", "briefs"):
         _select(views.add_parser(name))
+    skill = commands.add_parser("skill", help="List, inspect or install the portable Agent Skill.")
+    _location(skill)
+    actions = skill.add_subparsers(dest="action", required=True)
+    for action in ("list", "doctor", "install", "uninstall"):
+        sub = actions.add_parser(action)
+        _location(sub)
+        change = action in ("install", "uninstall")
+        sub.add_argument("--agent", choices=[*skills.AGENTS, *skills.ALIASES], required=change)
+        sub.add_argument("--json", action="store_true", help="Print machine-readable results.")
+        if change:
+            sub.add_argument("--scope", choices=("user", "project"), required=True)
+            sub.add_argument("--layout", choices=("auto", "native", "shared"), default="auto",
+                             help="Reuse an existing compatible layout or choose a specific location.")
+            sub.add_argument("--dry-run", action="store_true", help="Preview the operation without writing.")
     return p
 
 
@@ -66,6 +81,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     root = getattr(args, "project", Path.cwd()).resolve()
     try:
+        if args.command == "skill":
+            return _skill(args, root)
         if args.command == "init":
             path = initialize(root, args.pack, args.type)
             print(f"Edit {path}, then add your stickers and supplementary images in artwork/{args.pack}/.")
@@ -119,6 +136,38 @@ def main(argv: list[str] | None = None) -> int:
     except (ConfigError, OSError) as exc:
         print(f"wechat-sticker: {exc}", file=sys.stderr)
         return 2
+
+
+def _skill(args: argparse.Namespace, project: Path) -> int:
+    agent = skills.ALIASES.get(args.agent, args.agent)
+    if args.action in ("install", "uninstall"):
+        result = skills.change(agent, args.scope, project, args.layout, args.dry_run, args.action == "uninstall")
+        if args.json:
+            _emit(result)
+        else:
+            prefix = "Dry run: " if args.dry_run else ""
+            print(f"{prefix}{result['action']} {result['path']}")
+        return 0
+    doctor = args.action == "doctor"
+    rows = [skills.inspect(name, project, doctor) for name in ([agent] if agent else skills.AGENTS)]
+    report = {"agents": rows}
+    if doctor:
+        report["skill_resources"] = sorted(skills.skill_files())
+    if args.json:
+        _emit(report)
+    else:
+        for row in rows:
+            print(row["agent"])
+            for location in row["locations"]:
+                print(f"  {location['scope']} {location['layout']}  {location['path']}")
+            if doctor:
+                print(f"  executable  {row['runtime'] or 'not found on PATH'}")
+                for path in row["candidates"]:
+                    print(f"  filesystem candidate  {path}")
+                if "scope_note" in row:
+                    print(f"  first standard candidate  {row['first_standard_candidate'] or 'undetermined or absent'}")
+                    print(f"  {row['scope_note']}")
+    return 0
 
 
 def _print_scan(rows: list[dict]) -> None:

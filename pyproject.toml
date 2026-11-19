@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wechat-sticker-publisher"
-version = "0.1.1"
-description = "Prepare and verify WeChat sticker albums offline"
+version = "0.2.0"
+description = "An offline-first CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
@@ -23,8 +23,16 @@ wechat-sticker = "wechat_sticker_publisher.cli:main"
 [project.entry-points."wechat_sticker_publisher.artwork"]
 openai-images = "wechat_sticker_publisher.optional_openai:OpenAIImages"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["wechat_sticker_publisher", "wechat_sticker_publisher.skill_data", "wechat_sticker_publisher.skill_data.references"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+"wechat_sticker_publisher.skill_data" = ".agents/skills/wechat-sticker-publisher"
+
+[tool.setuptools.package-data]
+"wechat_sticker_publisher.skill_data" = ["SKILL.md"]
+"wechat_sticker_publisher.skill_data.references" = ["*.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
