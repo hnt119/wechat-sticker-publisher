@@ -1,0 +1,26 @@
+{
+  "id": "chestnut",
+  "name": "栗子巡游",
+  "description": "一颗小栗子抱着书出门，走过阵雨，也遇见了值得庆祝的小事。",
+  "appreciation": "请栗子喝杯暖茶",
+  "type": "static",
+  "characters": ["chestnut"],
+  "status": "draft",
+  "stickers": [
+    {"id": "hello", "path": "stickers/01-hello.png"},
+    {"id": "sprint", "path": "stickers/02-sprint.png"},
+    {"id": "rain", "path": "stickers/03-rain.png"},
+    {"id": "sleep", "path": "stickers/04-sleep.png"},
+    {"id": "love", "path": "stickers/05-love.png"},
+    {"id": "peek", "path": "stickers/06-peek.png"},
+    {"id": "cheer", "path": "stickers/07-cheer.png"},
+    {"id": "read", "path": "stickers/08-read.png"}
+  ],
+  "supplementary": {
+    "banner": "supplementary/banner.png",
+    "cover": "supplementary/cover.png",
+    "icon": "supplementary/icon.png",
+    "appreciation-guide": "supplementary/appreciation-guide.png",
+    "appreciation-thanks": "supplementary/appreciation-thanks.png"
+  }
+}

@@ -1,0 +1,9 @@
+include AGENTS.md README.zh-CN.md CONTRIBUTING.md CHANGELOG.md
+recursive-include docs *.md
+recursive-include .agents/skills *.md
+include examples/sample-album/README.md examples/sample-album/generate.py
+include examples/sample-album/preview.png examples/sample-album/toolkit-icon.png
+include examples/sample-album/publishing-config/chestnut.json
+recursive-include examples/sample-album/stickers *.png
+recursive-include examples/sample-album/supplementary *.png
+include .github/workflows/ci.yml
