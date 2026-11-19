@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 · Universal Agent Skills Support (release candidate)
+
+- Bundle one MIT-licensed Agent Skill with the offline CLI in the wheel and source archive.
+- Add project and user installation, inspection and safe removal for Codex, Claude Code, Gemini CLI, Cursor, OpenCode, GitHub Copilot CLI and DeepSeek Harness (`dsh`).
+- Document native and shared skill locations, duplicate handling and real-host test results. See the [compatibility matrix](docs/agent-compatibility.md) and [candidate release notes](docs/release-v0.2.0.md).
+- Existing album manifests, image processing, optional providers and publishing commands retain their v0.1.1 behavior.
+
 ## 0.1.1 · 2026-11-19
 
 - CI maintenance release. Pin checkout v7.0.1 and setup-python v7.1.0 to their Node.js 24 release commits. Checkout discards its Git credentials before the package steps.

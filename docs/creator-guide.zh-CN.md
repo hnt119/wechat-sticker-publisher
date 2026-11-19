@@ -86,16 +86,9 @@ wechat-sticker build --offline
 
 `TECHNICAL_PASS` 表示导出文件通过本地技术检查，`INCOMPLETE` 表示仍有待处理事项。请在微信表情开放平台后台核名、确认账号赞赏资格、填写版权署名和每张的含义词，核对当期要求，人工检查后逐项上传。审核结果由平台决定。
 
-## Codex 技能与可选作图
+## 智能体打包与可选作图
 
-项目技能位于 `.agents/skills/wechat-sticker-publisher/`。要在别的创作项目里用它，先安装命令行工具，再将技能目录复制到个人技能目录。macOS 或 Linux 用户可在工具仓库根目录运行以下命令。
-
-```sh
-mkdir -p ~/.agents/skills
-cp -R .agents/skills/wechat-sticker-publisher ~/.agents/skills/
-```
-
-在创作项目中启动新的 Codex 会话，输入“帮我打包微信表情”或“检查我的动态专辑”。技能会读取清单并运行同一套 CLI。若明确要求生成缺失配图，具备图像工具的代理可读取已确认的角色参考图和制作要求。[技能说明](../.agents/skills/wechat-sticker-publisher/SKILL.md)
+安装命令行工具并激活其 Python 虚拟环境。在创作目录执行 `wechat-sticker skill list` 查看智能体标识，然后运行 `wechat-sticker skill install --agent codex --scope project`，将 `codex` 替换为相应标识。个人全局安装可改用 `--scope user`。在智能体的新会话中打开专辑目录，输入“帮我把这些表情打包成微信表情专辑”。按上一节的方法核对生成的 ZIP、报告和缺图说明。[安装与排错](agent-installation.md) · [兼容性实测](agent-compatibility.md) · [DeepSeek Harness 使用说明](deepseek-harness.md)
 
 如需使用可选的 OpenAI Images 适配器，在工具仓库运行 `python -m pip install '.[openai]'`，在本机环境中设置 `OPENAI_API_KEY` 和 `WECHAT_STICKER_IMAGE_MODEL`，再执行 `wechat-sticker build --pack ID --generate-missing --provider openai-images`。这条作图命令可能将明确选用的参考图发给服务商并产生费用。其他已安装插件可通过 `--provider NAME` 或 `WECHAT_STICKER_PROVIDER` 配合 `--generate-missing` 选择。未配置插件时，程序会记录缺项、保存离线成果并提供手动作图说明。[插件配置与接口](artwork-providers.md)
 

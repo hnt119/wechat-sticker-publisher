@@ -7,7 +7,7 @@ The project or user installation supplies these same instructions to Codex, Clau
 3. Open the creator workspace in the host. Refresh its skill catalog or restart the session. Ask “Package my stickers for WeChat publishing.” If needed, explicitly name `wechat-sticker-publisher`.
 4. If the skill is absent or shadowed, run `wechat-sticker skill doctor --agent ID` from that project. Check which installed path the host actually loads. Use the ordinary CLI from the project shell if the host cannot run commands.
 
-Project policy, tool permissions and model availability belong to the host. Offline CLI packaging and missing-art briefs work independently. For the tested harness versions and known limitations, see the [compatibility matrix](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/agent-compatibility.md).
+Project policy, tool permissions and model availability belong to the host. Offline CLI packaging and missing-art briefs work independently. For tested harness versions and known limitations, open `docs/agent-compatibility.md` in the matching source archive or [repository revision](https://github.com/hnt119/wechat-sticker-publisher).
 
 ## License for the distributed skill
 
