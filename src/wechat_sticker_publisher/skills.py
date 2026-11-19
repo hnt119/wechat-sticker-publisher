@@ -85,6 +85,7 @@ def roots(agent: str, scope: str, project: Path) -> list[Root]:
     if scope == "user":
         override = {"claude-code": "CLAUDE_CONFIG_DIR", "deepseek-harness": "DSH_HOME",
                     "opencode": "XDG_CONFIG_HOME"}.get(agent)
+
         def configured(variable: str, default: Path) -> Path:
             value = os.environ.get(variable, "")
             if not value.strip():
@@ -213,7 +214,7 @@ def _owned(path: Path, agent: str, scope: str) -> None:
     try:
         with receipt.open("rb") as stream:
             record = json.loads(stream.read(8193)) if receipt.stat().st_size <= 8192 else None
-    except (ValueError, UnicodeError):
+    except (ValueError, RecursionError):
         record = None
     if not isinstance(record, dict) or (record.get("installer"), record.get("agent"), record.get("scope")) != (
         NAME + "/1", agent, scope

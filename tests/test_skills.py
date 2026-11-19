@@ -213,7 +213,11 @@ def test_dsh_doctor_detection_without_credentials(workspace, monkeypatch, tmp_pa
             Path(expected).chmod(0o755)
         assert main(["skill", "doctor", "--agent", "dsh", "--json"]) == 0
         report = json.loads(capsys.readouterr().out)
-        assert report["agents"][0]["runtime"] == expected
+        runtime = report["agents"][0]["runtime"]
+        if expected is None:
+            assert runtime is None
+        else:
+            assert Path(runtime).samefile(expected)
         assert report["agents"][0]["candidates"] == []
         assert set(report["skill_resources"]) == set(skills.FILES)
 
@@ -291,6 +295,7 @@ def test_linked_dsh_skill_with_alias_is_a_read_only_candidate(workspace, tmp_pat
     assert command("install") == command("uninstall") == 2
     assert link.is_symlink()
     assert (actual / "SKILL.md").is_file()
+
 
 @pytest.mark.skipif(os.name != "nt", reason="NTFS directory junction")
 def test_windows_install_refuses_junction(workspace, tmp_path):
