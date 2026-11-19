@@ -86,16 +86,9 @@ Under `releases/wechat/<release>/`, open `release-summary.md`, the previews and 
 
 `TECHNICAL_PASS` means the exported images and manifest passed the local baseline. `INCOMPLETE` lists the remaining issues. The WeChat dashboard is where you check title availability, account eligibility, copyright attribution, a short meaning keyword for each sticker, the current submission instructions and the platform's final decision. Upload the individual files after reviewing them.
 
-## Codex skill and optional generation
+## Agent-assisted packaging and optional generation
 
-The repository-scoped skill lives under `.agents/skills/wechat-sticker-publisher/`. To use it in other projects with Codex, install the CLI, then copy this folder to your personal skills directory. On macOS or Linux, run the following from the toolkit checkout.
-
-```sh
-mkdir -p ~/.agents/skills
-cp -R .agents/skills/wechat-sticker-publisher ~/.agents/skills/
-```
-
-Open your creator project in a new Codex session and ask “Package my stickers for WeChat” or “Check my animated album.” The skill reads your manifests and uses the installed CLI. Asking for missing artwork lets the agent work from your approved references and the generated briefs when image tools are available. [Agent workflow](../.agents/skills/wechat-sticker-publisher/SKILL.md)
+Install the CLI and activate its Python environment. In your creator project run `wechat-sticker skill list`, then `wechat-sticker skill install --agent codex --scope project`, substituting your agent ID. For a personal installation use `--scope user`. Open the album folder in a new session and ask “Package my stickers for WeChat publishing.” Review the same release summary, ZIP and briefs described above. [Installation and troubleshooting](agent-installation.md) · [Compatibility matrix](agent-compatibility.md) · [DeepSeek Harness walkthrough](deepseek-harness.md)
 
 For the optional OpenAI Images adapter, install the extra from the toolkit checkout with `python -m pip install '.[openai]'`. Set `OPENAI_API_KEY` and `WECHAT_STICKER_IMAGE_MODEL` in your local environment, then run `wechat-sticker build --pack ID --generate-missing --provider openai-images`. This opt-in command can send approved references to the service and incur charges. Other installed providers can be selected with `--provider NAME` or `WECHAT_STICKER_PROVIDER` plus `--generate-missing`. Without a configured provider, the build records the missing resources, keeps the offline exports and supplies manual briefs. [Provider setup and adapter interface](artwork-providers.md)
 

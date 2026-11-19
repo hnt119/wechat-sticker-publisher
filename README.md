@@ -1,8 +1,10 @@
 # WeChat Sticker Publisher
 
-[简体中文](README.zh-CN.md) · [v0.1.1 release](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.1)
+[简体中文](README.zh-CN.md) · [Latest stable release](https://github.com/hnt119/wechat-sticker-publisher/releases/latest)
 
-Turn illustrations or animated GIFs into a WeChat sticker album ready for manual review and upload. The CLI exports correctly sized artwork, Chinese submission copy, previews and one ZIP per album. **After installation, packaging works offline. No API key, subscription or cloud account is required.**
+*An offline-first CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums.*
+
+Turn illustrations or animated GIFs into a WeChat sticker album for manual review and upload. The CLI exports correctly sized artwork, Chinese submission copy, previews and one ZIP per album. **After installation, packaging works offline. No API key, subscription or cloud account is required.**
 
 <img src="examples/sample-album/preview.png" width="560" alt="Eight illustrations from the Chestnut Walk sample album, including a wave, a sprint and a nap">
 
@@ -30,9 +32,16 @@ Open `examples/sample-album/releases/wechat/first-look/release-summary.md`. The 
 
 The creator guide covers image filenames, GIF timing and loops, metadata, ordering, CLI options and troubleshooting. Check name availability and account eligibility in the WeChat creator portal before manual upload. [Creator guide](docs/creator-guide.md) · [Dated WeChat specifications](.agents/skills/wechat-sticker-publisher/references/wechat-specifications.md)
 
-## Use with Codex
+## Use with an agent
 
-With the CLI installed, copy `.agents/skills/wechat-sticker-publisher/` into `~/.agents/skills/`. In a new session in your creator project, ask **“Package my stickers for WeChat.”** The skill runs the same CLI. You can also explicitly request missing artwork through a configured image provider. [Agent skill](.agents/skills/wechat-sticker-publisher/SKILL.md) · [Optional artwork providers](docs/artwork-providers.md)
+Install the CLI from this version, activate its environment and run the following in your album folder. Replace `codex` with the adapter for your host.
+
+```sh
+wechat-sticker skill list
+wechat-sticker skill install --agent codex --scope project
+```
+
+Open the folder in your agent and ask **“Package my stickers for WeChat publishing.”** The same skill serves Codex, Claude Code, Gemini CLI, Cursor, OpenCode, GitHub Copilot CLI and DeepSeek Harness. The compatibility matrix records which hosts actually ran the sample. [Installation](docs/agent-installation.md) · [Compatibility and evidence](docs/agent-compatibility.md) · [DeepSeek Harness walkthrough](docs/deepseek-harness.md)
 
 ## License and project
 

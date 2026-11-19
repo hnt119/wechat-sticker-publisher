@@ -1,9 +1,14 @@
 ---
 name: wechat-sticker-publisher
-description: Inventory, validate and package a creator’s static or animated WeChat sticker albums with the offline wechat-sticker CLI. Use for album packaging, missing supplementary artwork, GIF checks, export reports and submission checklists.
+description: Prepare, validate, optimize, and package static or animated WeChat sticker albums using an offline Python CLI.
+license: MIT
 ---
 
-Work in the creator project containing `publishing-config/`. Use the installed `wechat-sticker` CLI for conversion, validation, reporting and packaging. Select the requested album with `--pack ID`; use `--all` when preparing the collection.
+Use this skill when the creator asks to package stickers for WeChat, check an album or prepare missing artwork briefs. Work in the creator project containing `publishing-config/`. You need permission to read the selected inputs, run shell commands and write the release in that project.
+
+Run `wechat-sticker --help` in the project shell. If it is unavailable, locate the creator’s installed virtual environment or report the missing CLI (Python 3.10+). For project or user installation and harness discovery, consult [agent compatibility](references/agent-compatibility.md).
+
+Select the requested album with `--pack ID`; use `--all` when preparing the collection.
 
 - Read the album manifests and any existing selection/approval notes. Preserve the ordered selection, approved masters, captions, release status and private references. A planned pose, another caption or a recolor is insufficient evidence of a new motion.
 - Run `wechat-sticker inventory --json` and `wechat-sticker validate` in the creator root. For a previously unconfigured project, inspect the actual files and use `init` to create the manifest. Use the creator’s copy when supplied. Keep unconfirmed editorial choices in the manifest status.

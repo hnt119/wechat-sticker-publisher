@@ -1,6 +1,8 @@
 # 微信表情专辑打包工具
 
-[English](README.md) · [v0.1.1 发布说明](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.1)
+[English](README.md) · [最新稳定版](https://github.com/hnt119/wechat-sticker-publisher/releases/latest)
+
+*用于准备、校验和打包微信表情专辑的离线优先命令行工具与可移植智能体技能。*
 
 把现有插画或动态 GIF 整理成微信表情专辑。命令行工具会按上架尺寸导出图片，生成中文上架文案、预览图和每张专辑的 ZIP，供创作者检查并手动上传。**安装后可离线打包，无需 API 密钥、付费订阅或云端账号。**
 
@@ -30,9 +32,16 @@ wechat-sticker --project examples/sample-album build --offline --release first-l
 
 创作者指南包含图片命名、GIF 帧时长和循环、专辑清单、排序、命令用法及常见问题。手动上传前，请在微信表情开放平台后台核名并确认账号资格。[创作者指南](docs/creator-guide.zh-CN.md) · [已核对的微信制作规范](.agents/skills/wechat-sticker-publisher/references/wechat-specifications.md)
 
-## 在 Codex 中使用
+## 在智能体中使用
 
-安装命令行工具后，将 `.agents/skills/wechat-sticker-publisher/` 复制到 `~/.agents/skills/`。在创作项目中启动新的 Codex 会话，输入**“帮我打包微信表情”**即可调用同一套工具。需要补图时，也可明确要求使用已配置的作图服务。[技能说明](.agents/skills/wechat-sticker-publisher/SKILL.md) · [可选作图服务](docs/artwork-providers.md)
+安装本版本的命令行工具，激活虚拟环境，在自己的专辑目录中运行以下命令。将 `codex` 换成所用智能体的标识即可。
+
+```sh
+wechat-sticker skill list
+wechat-sticker skill install --agent codex --scope project
+```
+
+在智能体中打开该目录，输入**“帮我把这些表情打包成微信表情专辑”**。Codex、Claude Code、Gemini CLI、Cursor、OpenCode、GitHub Copilot CLI 和 DeepSeek Harness 共用同一份技能。兼容性表逐项列出安装、发现及实际打包的验证结果。[安装指南](docs/agent-installation.md) · [兼容性与实测记录](docs/agent-compatibility.md) · [DeepSeek Harness 使用说明](docs/deepseek-harness.md)
 
 ## 许可与项目资料
 

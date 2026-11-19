@@ -18,8 +18,32 @@ jobs:
       - run: python -m pip install '.[test]'
       - run: python -m pytest
       - run: python -m build
+      - name: Install the skill from the wheel built from the source archive
+        run: |
+          python -m pip install --no-deps --force-reinstall dist/*.whl
+          mkdir -p "$RUNNER_TEMP/skill-project"
+          cd "$RUNNER_TEMP/skill-project"
+          wechat-sticker skill install --agent dsh --scope project
+          skill=.dsh/skills/wechat-sticker-publisher
+          for file in "$GITHUB_WORKSPACE"/.agents/skills/wechat-sticker-publisher/references/*.md; do
+            cmp "$file" "$skill/references/$(basename "$file")"
+          done
+          cmp "$GITHUB_WORKSPACE/.agents/skills/wechat-sticker-publisher/SKILL.md" "$skill/SKILL.md"
+          wechat-sticker skill uninstall --agent dsh --scope project
+          test ! -e "$skill"
       - name: Build the public example offline
         run: |
           cp -R examples/sample-album "$RUNNER_TEMP/sample"
           wechat-sticker --project "$RUNNER_TEMP/sample" validate
           wechat-sticker --project "$RUNNER_TEMP/sample" build --offline --release ci
+  windows-installer:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - run: python -m pip install '.[test]'
+      - run: python -m pytest tests/test_skills.py
