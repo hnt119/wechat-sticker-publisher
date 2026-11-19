@@ -1,6 +1,6 @@
 # Public-release audit
 
-Reviewed locally on 2026-11-19 for the v0.1.0 candidate. The shareable unit is this standalone toolkit repository. The creator workspace, original character references, working artwork and private publishing packages are outside its root.
+This audit records the local review of the initial v0.1.0 candidate (`c78808e`) on 2026-11-19. The shareable unit is this standalone toolkit repository. The creator workspace, original character references, working artwork and private publishing packages are outside its root.
 
 ## Source and artwork checks
 
@@ -30,7 +30,7 @@ Exact-file and pixel comparisons establish separation from the inspected collect
 
 The MIT copyright notice is **Copyright (c) 2026 hnt119 and WeChat Sticker Publisher contributors**. MIT covers the toolkit and public synthetic demo assets, including the preview and icon. Creators retain ownership of their uploaded artwork and generated publishing packages, subject to third-party rights. Private original artwork and character references are outside the public license. The required Python dependencies are installed separately. [License](../LICENSE) · [Sample provenance](../examples/sample-album/README.md)
 
-The checks covered local artifacts. Remote GitHub Actions, paid image generation and official platform review were unrun. Publication, tagging and platform submission require the owner's decision.
+These tests covered the local candidate. The repository’s Actions page records subsequent CI runs. Paid image generation and official platform review were outside this audit.
 
 ## Distribution checks
 
@@ -38,4 +38,4 @@ Python 3.12.7, Pillow 12.3.0 and PyYAML 6.0.3 passed all 32 local tests, includi
 
 Both the wheel and source archive declare the SPDX expression `MIT` and include the repository's license verbatim. Compared the permission, notice condition and warranty paragraphs against the standard MIT text after normalizing line wrapping. The source archive contains the public sample, skill, CI configuration, tests and bilingual documentation. The wheel contains the Python implementation and packaging metadata, with the optional SDK declared under an extra. Archive inspection checked each file against the clean source tree or the expected packaging metadata. [SPDX MIT text](https://spdx.org/licenses/MIT.txt)
 
-The prepared Git history consists of a single local root commit from the reviewed file set. The final commit ID and artifact digests are recorded with the local distribution handoff.
+The initial candidate was a single root commit. The v0.1.0 tag identifies the final source used for the release downloads. SHA256SUMS accompanies the wheel and source distribution on the release page.

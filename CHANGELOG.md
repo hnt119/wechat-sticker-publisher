@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 · prepared for review
+## 0.1.0 · 2026-11-19
 
 - Inventory, validate and package static or motion albums with the offline `wechat-sticker` command and the matching agent skill.
 - Read ordered JSON/YAML manifests or discover artwork in dedicated directories.

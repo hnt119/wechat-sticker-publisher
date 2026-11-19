@@ -1,21 +1,13 @@
-# Repository and first release
+# WeChat Sticker Publisher v0.1.0
 
-**Suggested description** — Offline CLI and agent skill for validating, optimizing and packaging WeChat sticker albums, including animated GIFs.
+The first release packages static and animated WeChat sticker albums from local files. The CLI and Codex skill share the same validation and export code. Each build writes upload files, Chinese submission copy, previews, a checklist and an album ZIP. If an image is missing, the report describes what to supply and the other exports remain available.
 
-**Topics** — wechat, stickers, gif, pillow, python, cli, offline-first, agent-skill, image-processing
+The GitHub release includes a Python wheel, a source distribution with the Chestnut Walk example and SHA-256 checksums. The offline format checks use the WeChat guide reviewed on 19 November 2026. Creators check account eligibility, ownership and name availability in the portal and review their artwork before uploading.
 
-**Artwork** — Use the [project icon](../examples/sample-album/toolkit-icon.png) and the [eight-pose sample preview](../examples/sample-album/preview.png). Both are original procedural illustrations released under the repository MIT license.
+## Roadmap
 
-## Draft v0.1.0 release notes
+1. Collect creator feedback on installation, GIF playback and validation messages.
+2. Track changes in WeChat's guide and update the local rules and tests together.
+3. Extend artwork provider support and localized reports as creators contribute examples.
 
-Prepare a static or animated sticker pack on your own computer. Supply your own artwork, or try the included Chestnut Walk sample. Version 0.1.0 creates reviewable uploads, Chinese copy, preview sheets and reproducible album archives. Incomplete albums receive the available exports and briefs describing the work still needed. Optional generation can fill missing supporting images when enabled.
-
-The public WeChat guide was checked on 19 November 2026. Creator eligibility, rights, name availability and platform review still require the creator portal. The toolkit is independently maintained.
-
-## Initial roadmap
-
-1. Collect creator feedback on installation, ambiguous validation messages and GIF playback across clients.
-2. Track changes in WeChat’s public guide and refresh the local rules with dated evidence.
-3. Extend provider interoperability and localized reporting as creators contribute representative examples.
-
-Publication, tagging and release uploads are owner decisions. Before publishing, repeat the source and distribution checks described in the public-release audit.
+[Sample and drawing source](../examples/sample-album/) · [Specification reference](../.agents/skills/wechat-sticker-publisher/references/wechat-specifications.md) · [Public-release audit](public-release-audit.md)
