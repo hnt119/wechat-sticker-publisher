@@ -1,6 +1,6 @@
 # WeChat Sticker Publisher
 
-[简体中文](README.zh-CN.md) · [v0.1.0 release](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.0)
+[简体中文](README.zh-CN.md) · [v0.1.1 release](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.1)
 
 Turn illustrations or animated GIFs into a WeChat sticker album ready for manual review and upload. The CLI exports correctly sized artwork, Chinese submission copy, previews and one ZIP per album. **After installation, packaging works offline. No API key, subscription or cloud account is required.**
 

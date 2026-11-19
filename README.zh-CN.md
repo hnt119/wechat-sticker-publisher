@@ -1,6 +1,6 @@
 # 微信表情专辑打包工具
 
-[English](README.md) · [v0.1.0 发布说明](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.0)
+[English](README.md) · [v0.1.1 发布说明](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.1.1)
 
 把现有插画或动态 GIF 整理成微信表情专辑。命令行工具会按上架尺寸导出图片，生成中文上架文案、预览图和每张专辑的 ZIP，供创作者检查并手动上传。**安装后可离线打包，无需 API 密钥、付费订阅或云端账号。**
 
