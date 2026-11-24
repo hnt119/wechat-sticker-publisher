@@ -6,4 +6,4 @@ include examples/sample-album/preview.png examples/sample-album/toolkit-icon.png
 include examples/sample-album/publishing-config/chestnut.json
 recursive-include examples/sample-album/stickers *.png
 recursive-include examples/sample-album/supplementary *.png
-include .github/workflows/ci.yml
+include .github/workflows/ci.yml .github/workflows/release.yml tools/build_release.py

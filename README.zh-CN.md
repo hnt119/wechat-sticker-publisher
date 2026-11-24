@@ -2,47 +2,51 @@
 
 [English](README.md) · [最新稳定版](https://github.com/hnt119/wechat-sticker-publisher/releases/latest)
 
-*用于准备、校验和打包微信表情专辑的离线优先命令行工具与可移植智能体技能。*
+离线优先的命令行工具与可移植的智能体技能，用于准备、校验和打包微信表情专辑。把插画或动态 GIF 整理成可上传的图片、中文上架文案、预览图和专辑 ZIP，供创作者检查后手动提交。
 
-把现有插画或动态 GIF 整理成微信表情专辑。命令行工具会按上架尺寸导出图片，生成中文上架文案、预览图和每张专辑的 ZIP，供创作者检查并手动上传。**安装后可离线打包，无需 API 密钥、付费订阅或云端账号。**
+![「栗子巡游」的八张示例表情，包括挥手、奔跑和打盹](examples/sample-album/preview.png)
 
-<img src="examples/sample-album/preview.png" width="560" alt="「栗子巡游」的八张示例表情，包括挥手、奔跑和打盹">
+## 安装命令行工具
 
-## 试做示例专辑
-
-安装 Git 和 Python 3.10 或更高版本后，在 macOS 或 Linux 终端运行以下命令。示例包含八张静态表情和全部五张发布配图。[Windows 及离线安装说明](docs/creator-guide.zh-CN.md)
+准备好 Python 3.10 或更高版本及 uv 后，执行以下命令安装已发布的 GitHub wheel。uv 会管理运行环境，无需克隆仓库或开通 AI 账号。[安装 uv](https://docs.astral.sh/uv/getting-started/installation/) · [安装 pipx](https://pipx.pypa.io/stable/installation/)
 
 ```sh
-git clone https://github.com/hnt119/wechat-sticker-publisher.git
-cd wechat-sticker-publisher
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install .
-
-wechat-sticker --project examples/sample-album build --offline --release first-look
+uv tool install https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0-py3-none-any.whl
+wechat-sticker --version
 ```
 
-打开 `examples/sample-album/releases/wechat/first-look/release-summary.md`，示例应显示 **TECHNICAL_PASS**。同一目录还包含专辑 ZIP、可逐个上传的成品、预览图和提交核对清单。[示例素材与绘图源码](examples/sample-album/)
+也可将 `uv tool install` 换成 `pipx install`，使用同一下载地址。若终端找不到 `wechat-sticker`，请按安装方式运行 `uv tool update-shell` 或 `pipx ensurepath`，再重新打开终端。安装完成后即可离线使用。[离线与 Windows 安装](docs/creator-guide.zh-CN.md) · [开发环境安装](CONTRIBUTING.md)
 
 ## 打包自己的表情
 
-1. 在自己的创作目录中运行 `wechat-sticker init`。打开 `publishing-config/album.json`，填写专辑名称、介绍、赞赏引导语和角色标识。
-2. 将 8–24 个不同动作放入 `artwork/album/stickers/`，整张专辑使用统一的静态或动态类型。将横幅、封面、聊天图标和两张赞赏配图放入 `artwork/album/supplementary/`。
-3. 运行 `wechat-sticker validate` 检查源文件，再运行 `wechat-sticker build` 导出。缺图时也会保存可用的成品，列出缺少的图片及制作要求。补齐后再打包即可。
+1. 在新建的专辑目录运行 `wechat-sticker init`。打开 `publishing-config/album.json`，填写专辑名称、介绍、赞赏引导语和角色标识。
+2. 将 8–24 个不同动作放入 `artwork/album/stickers/`。同一张专辑统一使用静态或动态表情。将横幅、封面、聊天图标和两张赞赏配图放入 `artwork/album/supplementary/`。
+3. 先检查源文件，再打包发布目录。
 
-创作者指南包含图片命名、GIF 帧时长和循环、专辑清单、排序、命令用法及常见问题。手动上传前，请在微信表情开放平台后台核名并确认账号资格。[创作者指南](docs/creator-guide.zh-CN.md) · [已核对的微信制作规范](.agents/skills/wechat-sticker-publisher/references/wechat-specifications.md)
+```sh
+wechat-sticker validate
+wechat-sticker build --offline --release first-look
+```
+
+打开 `releases/wechat/first-look/release-summary.md` 查看打包结果。同一目录下有专辑 ZIP、预览图和已解包的专辑文件夹，校验报告和提交核对清单在专辑文件夹内。若有缺图，工具会导出现有成品并生成补图说明。[创作者指南与文件命名](docs/creator-guide.zh-CN.md)
 
 ## 在智能体中使用
 
-安装本版本的命令行工具，激活虚拟环境，在自己的专辑目录中运行以下命令。将 `codex` 换成所用智能体的标识即可。
+先按上文安装命令行工具，让智能体能够运行 `wechat-sticker`。然后在专辑目录中**任选一种**方式安装技能。
 
-```sh
-wechat-sticker skill list
-wechat-sticker skill install --agent codex --scope project
-```
+| 安装方式 | 命令 |
+| --- | --- |
+| Python 工具自带的离线安装器 | `wechat-sticker skill install --agent codex --scope project` |
+| Vercel skills CLI，从 GitHub 下载 | `npx skills@1.9.0 add hnt119/wechat-sticker-publisher --skill wechat-sticker-publisher --agent claude-code` |
 
-在智能体中打开该目录，输入**“帮我把这些表情打包成微信表情专辑”**。Codex、Claude Code、Gemini CLI、Cursor、OpenCode、GitHub Copilot CLI 和 DeepSeek Harness 共用同一份技能。兼容性表逐项列出安装、发现及实际打包的验证结果。[安装指南](docs/agent-installation.md) · [兼容性与实测记录](docs/agent-compatibility.md) · [DeepSeek Harness 使用说明](docs/deepseek-harness.md)
+外部技能安装器提供指令和参考资料，实际打包由单独安装的 Python 工具完成。在智能体中打开专辑目录，输入**“帮我把这些表情打包成微信表情专辑”**。
 
-## 许可与项目资料
+内置安装器适配 Codex、Claude Code、Gemini CLI、Cursor、OpenCode、GitHub Copilot CLI 和 DeepSeek Harness。Codex 与 OpenCode 已完成实机端到端示例打包。[安装范围与升级](docs/agent-installation.md) · [各智能体验证记录](docs/agent-compatibility.md)
 
-MIT 许可证涵盖工具本身和公开的合成示例素材，包括预览图及项目图标。创作者保留对自己画作及生成发布包的所有权，并须尊重第三方权利。私人角色原画与未发布专辑的权利仍归创作者所有。本项目由独立开发者维护，与微信、腾讯无官方关联。[许可证](LICENSE) · [贡献指南](CONTRIBUTING.md) · [更新日志](CHANGELOG.md) · [公开发布审计](docs/public-release-audit.md)
+## 试做完整示例
+
+下载并解压[稳定版源码包](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz)，在其中的 `examples/sample-album` 目录运行上文的校验与打包命令。「栗子巡游」示例包含八张表情和五张配图，应显示 **TECHNICAL_PASS**。
+
+## 隐私与许可
+
+MIT 许可证涵盖工具与原创合成示例素材。创作者保留对自己画作及生成发布包的权利，并须尊重第三方权利。私人角色设计和未发布专辑的权利仍归创作者。明确要求生成配图时，可选作图服务可处理已授权的参考图。请人工核对成品后手动上传。本项目独立开发，与微信、腾讯无官方关联。[许可证](LICENSE) · [公开发布审计](docs/public-release-audit.md)

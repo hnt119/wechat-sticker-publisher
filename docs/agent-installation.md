@@ -1,6 +1,17 @@
 # Install the publishing skill
 
-Install the v0.2.0 CLI from its wheel, source archive or checkout using `python -m pip install <path>` in a Python 3.10+ virtual environment. Activate that environment before launching the host so it can run `wechat-sticker`. The CLI carries the skill and all three references. Installation uses local files and requires no model, API key or agent SDK.
+Install the Python CLI using the [quick start](../README.md#install-the-cli), then verify `wechat-sticker --version` in the shell used to launch the agent. Both the wheel and source distribution contain the canonical skill and its three references. The CLI handles album files. A skill installer supplies instructions to the host.
+
+## Choose an installer
+
+Use the bundled installer below for local installation without Node.js or network access. If you already manage skills with the Vercel CLI, use it instead from the creator workspace. The tests used skills 1.9.0 on Node.js 24.22.3. That installer requires Node.js 22.20 or later.
+
+```sh
+npx skills@1.9.0 add hnt119/wechat-sticker-publisher --list
+npx skills@1.9.0 add hnt119/wechat-sticker-publisher --skill wechat-sticker-publisher --agent claude-code
+```
+
+To pin the source, append a published tag or full commit to the repository name, for example `hnt119/wechat-sticker-publisher@v0.2.0`. The upstream CLI can create shared copies, links and its own lockfile. Manage that installation with the same installer. Installing by GitHub repository works independently of a skills.sh directory listing. The external installer can need network access and does not install the Python CLI. [Upstream CLI](https://github.com/vercel-labs/skills)
 
 ## Choose the scope
 
@@ -28,6 +39,20 @@ wechat-sticker skill uninstall --agent dsh --scope project --dry-run
 Run the uninstall command without `--dry-run` to remove an unchanged installation owned by the installer. It preserves manually copied, modified or unrelated files. If a name collides, inspect both copies and back up your edits. Where supported, use `--layout shared` to choose a shared directory or `--layout native` for a host-specific one. Check the reported path before changing a shared installation used by several hosts. To migrate a hand-installed v0.1.1 Codex skill, move the old directory to a backup outside every discovery root, then install again. Keep any custom instructions you want to reapply.
 
 The installer checks direct child bundles in the standard roots for the requested scope. Check the host catalog for administrator policy, plugins, custom directories and inherited or nested project skills. Diagnostics can report a symbolic link as a candidate. Install and uninstall require a regular destination.
+
+## Upgrade from v0.2.0
+
+Install the new CLI with the same tool manager, using the reviewed wheel path or release URL. With uv, use `uv tool install --reinstall WHEEL`; with pipx, use `pipx install --force WHEEL`. Replace `WHEEL` with the chosen file or URL. Run `wechat-sticker --version` and `wechat-sticker skill doctor --agent codex` to check the active installation. v0.2.1 diagnostics include the CLI, interpreter and dependency versions.
+
+An unchanged, native-installer-managed v0.2.0 skill can be updated separately. Use the same agent, scope and project you used originally.
+
+```sh
+wechat-sticker skill uninstall --agent codex --scope project --dry-run
+wechat-sticker skill uninstall --agent codex --scope project
+wechat-sticker skill install --agent codex --scope project
+```
+
+If the preview reports a modification or ownership conflict, keep the copy. Back up custom instructions outside every discovery root before choosing whether to replace them. An upstream-managed link or copy should be updated by its own installer. The CLI upgrade and skill installer operate independently of artwork, manifests and existing release directories.
 
 ## Try it in an album
 

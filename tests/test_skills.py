@@ -308,3 +308,37 @@ def test_windows_install_refuses_junction(workspace, tmp_path):
     assert junction.is_dir()
     assert command("install") == 2
     assert not list(outside.iterdir())
+
+
+def test_upgrade_replaces_only_unchanged_managed_bundle(workspace, monkeypatch):
+    project, _ = workspace
+    canonical = skills.skill_files()
+    earlier = {**canonical, "SKILL.md": canonical["SKILL.md"] + b"\nPrevious release\n"}
+    monkeypatch.setattr(skills, "skill_files", lambda: earlier)
+    assert command("install") == 0
+    bundle = project / ".dsh" / "skills" / NAME
+    monkeypatch.setattr(skills, "skill_files", lambda: canonical)
+    assert command("install") == 2
+    assert (bundle / "SKILL.md").read_bytes() == earlier["SKILL.md"]
+    assert command("uninstall") == command("install") == 0
+    assert (bundle / "SKILL.md").read_bytes() == canonical["SKILL.md"]
+
+
+def test_external_manager_retains_copy_symlink_and_lock(workspace):
+    project, _ = workspace
+    target = project / ".agents" / "skills" / NAME
+    shutil.copytree(REPO / ".agents" / "skills" / NAME, target)
+    link = project / ".claude" / "skills" / NAME
+    link.parent.mkdir(parents=True)
+    link.symlink_to(target, target_is_directory=True)
+    lock = project / "skills-lock.json"
+    lock.write_text(json.dumps({"skills": {NAME: {"source": "hnt119/wechat-sticker-publisher"}}}))
+
+    assert command("install", agent="codex") == 0  # Identical shared copy can be reused.
+    assert command("uninstall", agent="codex") == 2
+    assert command("install", agent="claude-code") == 2
+    assert command("uninstall", agent="claude-code") == 2
+    assert link.is_symlink() and link.resolve() == target
+    assert not (target / skills.RECEIPT).exists()
+    assert (target / "SKILL.md").read_bytes() == skills.skill_files()["SKILL.md"]
+    assert json.loads(lock.read_text())["skills"][NAME]["source"] == "hnt119/wechat-sticker-publisher"

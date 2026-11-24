@@ -4,6 +4,8 @@
 
 ## Installation on Windows or an offline computer
 
+Windows creators can use the same [uv or pipx tool installation](../README.md#install-the-cli) as macOS and Linux. For a development checkout or a fully offline setup, use the commands below.
+
 Use Python 3.10 or later. From the repository directory in PowerShell, run:
 
 ```powershell
@@ -13,6 +15,15 @@ python -m pip install .
 ```
 
 For an air-gapped machine, run `python -m pip wheel . --wheel-dir wheelhouse` on a connected machine with the same Python version, operating system and architecture. Copy the wheelhouse to the offline machine and run `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher` in its virtual environment.
+
+To try the prebuilt public sample with any installed CLI, download the [v0.2.0 source archive](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz) into an empty directory. From that directory, extract and build it with these commands.
+
+```sh
+tar -xzf wechat_sticker_publisher-0.2.0.tar.gz
+cd wechat_sticker_publisher-0.2.0/examples/sample-album
+wechat-sticker validate
+wechat-sticker build --offline --release first-look
+```
 
 ## Prepare your own album
 
@@ -88,13 +99,13 @@ Under `releases/wechat/<release>/`, open `release-summary.md`, the previews and 
 
 ## Agent-assisted packaging and optional generation
 
-Install the CLI and activate its Python environment. In your creator project run `wechat-sticker skill list`, then `wechat-sticker skill install --agent codex --scope project`, substituting your agent ID. For a personal installation use `--scope user`. Open the album folder in a new session and ask “Package my stickers for WeChat publishing.” Review the same release summary, ZIP and briefs described above. [Installation and troubleshooting](agent-installation.md) · [Compatibility matrix](agent-compatibility.md) · [DeepSeek Harness walkthrough](deepseek-harness.md)
+Install the CLI and run `wechat-sticker --version` in the terminal that launches your agent. In your creator project run `wechat-sticker skill list`, then `wechat-sticker skill install --agent codex --scope project`, substituting your agent ID. For a personal installation use `--scope user`. Open the album folder in a new session and ask “Package my stickers for WeChat publishing.” Review the same release summary, ZIP and briefs described above. [Installation and troubleshooting](agent-installation.md) · [Compatibility matrix](agent-compatibility.md) · [DeepSeek Harness walkthrough](deepseek-harness.md)
 
 For the optional OpenAI Images adapter, install the extra from the toolkit checkout with `python -m pip install '.[openai]'`. Set `OPENAI_API_KEY` and `WECHAT_STICKER_IMAGE_MODEL` in your local environment, then run `wechat-sticker build --pack ID --generate-missing --provider openai-images`. This opt-in command can send approved references to the service and incur charges. Other installed providers can be selected with `--provider NAME` or `WECHAT_STICKER_PROVIDER` plus `--generate-missing`. Without a configured provider, the build records the missing resources, keeps the offline exports and supplies manual briefs. [Provider setup and adapter interface](artwork-providers.md)
 
 ## Troubleshooting
 
-- **Command missing.** Activate the environment used at installation. `python -m pip show wechat-sticker-publisher` displays its install location.
+- **Command missing.** For uv, run `uv tool list` and `uv tool update-shell`. For pipx, run `pipx list` and `pipx ensurepath`. Reopen the terminal and try `wechat-sticker --version`. If you installed with pip in a virtual environment, activate that environment first.
 - **Album or image missing.** Point `--project` at the directory containing `publishing-config/`. Check filename case, role stems and artwork paths relative to the project root.
 - **A cover fails transparency.** Export a clean PNG cutout with visible artwork and transparent surrounding pixels. An opaque white canvas and a painted checkerboard both count as opaque.
 - **A motion album is short.** Count distinct reactions. Export another completed action before marking the album ready. Review visual similarity manually, including alternate captions that change pixels without changing the action.

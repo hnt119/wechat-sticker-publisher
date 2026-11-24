@@ -1,0 +1,153 @@
+name: Release distributions
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Approved annotated release tag (vX.Y.Z)
+        required: true
+        type: string
+      commit:
+        description: Full reviewed main commit SHA
+        required: true
+        type: string
+
+permissions: {}
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    if: github.event_name == 'pull_request' || (github.repository == 'hnt119/wechat-sticker-publisher' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      artifact: ${{ steps.collect.outputs.artifact-id }}
+      source: ${{ steps.source.outputs.commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - id: source
+        name: Identify release source
+        env:
+          TAG: ${{ inputs.tag }}
+          COMMIT: ${{ inputs.commit }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            version=$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')
+            [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ && "$TAG" == "v$version" ]] ||
+              { echo "Tag must match the package version"; exit 1; }
+            [[ "$COMMIT" == "$GITHUB_SHA" && "$COMMIT" == "$(git rev-parse HEAD)" ]] ||
+              { echo "Commit must match the dispatched main revision"; exit 1; }
+            [[ "$(git cat-file -t "refs/tags/$TAG")" == tag && "$(git rev-parse "refs/tags/$TAG^{commit}")" == "$COMMIT" ]] ||
+              { echo "Expected an annotated tag on the reviewed commit"; exit 1; }
+            environment_url="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/environments/pypi"
+            curl --fail --silent --show-error "$environment_url" |
+              jq -e '.deployment_branch_policy.custom_branch_policies and any(.protection_rules[]; .type == "required_reviewers" and (.reviewers | length > 0))'
+            curl --fail --silent --show-error "$environment_url/deployment-branch-policies" |
+              jq -e '.total_count == 1 and .branch_policies[0].name == "main" and (.branch_policies[0].type // "branch") == "branch"'
+          fi
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Build twice from clean Git exports
+        run: |
+          python -m pip install build==1.6.1 setuptools==84.2.1 wheel==0.48.0
+          python tools/build_release.py dist
+      - id: collect
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: distributions-${{ steps.source.outputs.commit }}
+          path: dist/
+          if-no-files-found: error
+
+  verify:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      manifest_sha: ${{ steps.checksums.outputs.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.build.outputs.source }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact }}
+          path: dist
+      - id: checksums
+        name: Verify collected distribution checksums
+        working-directory: dist
+        run: |
+          sha256sum --strict -c SHA256SUMS
+          echo "sha=$(sha256sum SHA256SUMS | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - name: Check metadata, clean installations, skill resources and offline album
+        run: |
+          python -m pip install twine
+          python -m twine check --strict dist/*.whl dist/*.tar.gz
+          version=$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')
+          for package in dist/*.whl dist/*.tar.gz; do
+            work=$(mktemp -d)
+            python -m venv "$work/venv"
+            py="$work/venv/bin/python"
+            cli="$work/venv/bin/wechat-sticker"
+            "$py" -m pip install "$package" 'Pillow==12.3.0' 'PyYAML==6.0.3' pytest
+            "$py" -m pip check
+            test "$("$cli" --version)" = "$version"
+            "$py" -m pytest -q
+            cp -R examples/sample-album "$work/album"
+            "$cli" --project "$work/album" skill install --agent codex --scope project
+            skill=.agents/skills/wechat-sticker-publisher
+            diff -r -x .wechat-sticker-install.json "$skill" "$work/album/$skill"
+            "$cli" --project "$work/album" validate
+            "$cli" --project "$work/album" build --offline --release review
+            cd "$work/album/releases/wechat/review"
+            archives=(*.zip)
+            test "${#archives[@]}" -eq 1
+            echo "a05bcbe9d32860c168e7ce7ad990eb075874b9f4874e0c4913955f388e59b36e  ${archives[0]}" | sha256sum -c -
+            cd "$GITHUB_WORKSPACE"
+          done
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'hnt119/wechat-sticker-publisher' && github.ref == 'refs/heads/main'
+    needs: [build, verify]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/wechat-sticker-publisher/
+    permissions:
+      id-token: write
+    concurrency:
+      group: publish-pypi
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact }}
+          path: verified
+      - name: Check reviewed bytes and select distribution files
+        env:
+          MANIFEST_SHA: ${{ needs.verify.outputs.manifest_sha }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        working-directory: verified
+        run: |
+          echo "$MANIFEST_SHA  SHA256SUMS" | sha256sum --strict -c -
+          sha256sum --strict -c SHA256SUMS
+          mkdir ../dist
+          package="wechat_sticker_publisher-${RELEASE_TAG#v}"
+          mv -- "$package-py3-none-any.whl" "$package.tar.gz" ../dist/
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: dist/
+          attestations: true

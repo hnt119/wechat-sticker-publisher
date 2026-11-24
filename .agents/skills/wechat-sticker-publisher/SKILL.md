@@ -6,7 +6,7 @@ license: MIT
 
 Use this skill when the creator asks to package stickers for WeChat, check an album or prepare missing artwork briefs. Work in the creator project containing `publishing-config/`. You need permission to read the selected inputs, run shell commands and write the release in that project.
 
-Run `wechat-sticker --help` in the project shell. If it is unavailable, locate the creator’s installed virtual environment or report the missing CLI (Python 3.10+). For project or user installation and harness discovery, consult [agent compatibility](references/agent-compatibility.md).
+Run `wechat-sticker --help` in the project shell. An external skill installation supplies instructions only. If the command is missing, check the creator’s existing tool environment, then explain that the separate Python 3.10+ CLI is required. Offer the verified wheel installation command in [agent compatibility](references/agent-compatibility.md), or an offline wheelhouse if available. Ask before installing software or accessing the network. Resume validation and packaging after the executable runs successfully. If it remains unavailable, report the missing prerequisite and leave the album untouched.
 
 Select the requested album with `--pack ID`; use `--all` when preparing the collection.
 
