@@ -4,7 +4,7 @@ DeepSeek Harness (DSH) discovers this project’s portable skill and loads it in
 
 ## Start in an album
 
-Install the toolkit, activate its Python environment, and open a terminal in the directory containing the album’s `publishing-config/`. To try the public example from the toolkit checkout, use `cd examples/sample-album`. The project installer uses the nearest Git root, so a sample inside the checkout can already use its canonical shared skill. [CLI installation](../README.md#try-the-sample) · [Public sample album](../examples/sample-album/)
+Install the CLI with uv or pipx, confirm that `wechat-sticker --version` works, and open a terminal in the directory containing the album’s `publishing-config/`. To try the public example from the toolkit checkout, use `cd examples/sample-album`. The project installer uses the nearest Git root, so a sample inside the checkout can already use its canonical shared skill. [CLI installation](../README.md#install-the-cli) · [Public sample album](../examples/sample-album/)
 
 Choose one scope. These commands show the project installation and how to preview a user installation for all your workspaces.
 

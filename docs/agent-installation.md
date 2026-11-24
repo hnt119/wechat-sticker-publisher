@@ -1,17 +1,17 @@
 # Install the publishing skill
 
-Install the Python CLI using the [quick start](../README.md#install-the-cli), then verify `wechat-sticker --version` in the shell used to launch the agent. Both the wheel and source distribution contain the canonical skill and its three references. The CLI handles album files. A skill installer supplies instructions to the host.
+Install the CLI from PyPI with `uv tool install wechat-sticker-publisher` or `pipx install wechat-sticker-publisher`. Run `wechat-sticker --version` in the shell that launches your agent. Both the wheel and source distribution contain the canonical skill and its three references. The CLI handles album files. A skill installer supplies instructions to the host. [CLI quick start](../README.md#install-the-cli)
 
 ## Choose an installer
 
 Use the bundled installer below for local installation without Node.js or network access. If you already manage skills with the Vercel CLI, use it instead from the creator workspace. The tests used skills 1.9.0 on Node.js 24.22.3. That installer requires Node.js 22.20 or later.
 
 ```sh
-npx skills@1.9.0 add hnt119/wechat-sticker-publisher --list
-npx skills@1.9.0 add hnt119/wechat-sticker-publisher --skill wechat-sticker-publisher --agent claude-code
+npx skills@1.9.0 add hnt119/wechat-sticker-publisher@v0.2.1 --list
+npx skills@1.9.0 add hnt119/wechat-sticker-publisher@v0.2.1 --skill wechat-sticker-publisher --agent claude-code
 ```
 
-To pin the source, append a published tag or full commit to the repository name, such as `hnt119/wechat-sticker-publisher@v0.2.1` once that tag is available. The upstream CLI can create shared copies, links and its own lockfile. Manage that installation with the same installer. Installing by GitHub repository works independently of a skills.sh directory listing. The external installer can need network access and does not install the Python CLI. [Upstream CLI](https://github.com/vercel-labs/skills)
+These commands select the v0.2.1 tag. You can also use a full commit SHA after `@`. The upstream CLI can create shared copies, links and its own lockfile. Manage that installation with the same installer. Installing by GitHub repository works independently of a skills.sh directory listing. The external installer can need network access and does not install the Python CLI. [Upstream CLI](https://github.com/vercel-labs/skills)
 
 ## Choose the scope
 
@@ -42,7 +42,7 @@ The installer checks direct child bundles in the standard roots for the requeste
 
 ## Upgrade from v0.2.0
 
-Install the new CLI with the same tool manager, using the reviewed wheel path or release URL. With uv, use `uv tool install --reinstall WHEEL`; with pipx, use `pipx install --force WHEEL`. Replace `WHEEL` with the chosen file or URL. Run `wechat-sticker --version` and `wechat-sticker skill doctor --agent codex` to check the active installation. v0.2.1 diagnostics include the CLI, interpreter and dependency versions.
+If you originally installed the v0.2.0 GitHub wheel, use the same tool manager to switch to the PyPI release. Run `uv tool install --reinstall wechat-sticker-publisher==0.2.1` or `pipx install --force wechat-sticker-publisher==0.2.1`. Run `wechat-sticker --version` and `wechat-sticker skill doctor --agent codex` to check the active installation. v0.2.1 diagnostics include the CLI, interpreter and dependency versions.
 
 An unchanged, native-installer-managed v0.2.0 skill can be updated separately. Use the same agent, scope and project you used originally.
 

@@ -1,23 +1,34 @@
 # WeChat Sticker Publisher v0.2.1 — Distribution & Developer Experience
 
-Version 0.2.1 makes the offline publishing workflow easier to install and diagnose. Install its wheel with uv or pipx to get the `wechat-sticker` command without cloning the project. The release workflow supplies the matching wheel, source archive and checksums for each verified commit.
+Released 24 November 2026. Install the offline CLI from PyPI with `uv tool install wechat-sticker-publisher` or `pipx install wechat-sticker-publisher`. Run `wechat-sticker --version` to see the installed version. [PyPI project](https://pypi.org/project/wechat-sticker-publisher/0.2.1/) · [GitHub Release](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.2.1)
 
-- The English and Chinese quick starts cover your first album, the complete Chestnut Walk example and where to find its ZIP, reports and previews.
-- The Vercel skills CLI can discover the canonical skill by GitHub repository and install it by tag or commit. The skill checks for the separate Python CLI and offers an installation route when it is missing. The bundled seven-agent installer still works offline.
-- `wechat-sticker skill doctor` identifies the active interpreter, CLI, Pillow and PyYAML versions. The CLI explains how to repair missing dependencies. Installer diagnostics explain how to preserve customized or independently managed copies.
-- Both Python distributions include package-index metadata, the canonical instructions, three skill references and the MIT license. The CI review workflow builds twice from the proposed commit and verifies the collected distributions. Production publication uses a separate protected job and PyPI Trusted Publishing.
-- The v0.2.0 publishing commands, album format, optional artwork providers and deterministic output are preserved. Codex and OpenCode have completed end-to-end album packaging. Other runtime results remain individually documented. [Compatibility matrix](agent-compatibility.md)
+## What changed
 
-## Verify the distribution
+- The English and Chinese quick starts cover the first album, the complete Chestnut Walk example, and where to find its ZIP, reports and previews.
+- The external skills CLI installs the canonical skill from the GitHub tag. The skill asks before installing a missing Python CLI. The seven bundled adapters still install offline. [Agent installation](agent-installation.md)
+- `wechat-sticker skill doctor` reports the active interpreter, CLI, Pillow and PyYAML versions. Diagnostics explain how to repair missing dependencies and preserve customized skills.
+- The v0.2.0 album format, publishing commands, optional artwork providers and deterministic output are preserved. Codex and OpenCode have packaged the sample end to end. [Evidence for each host](agent-compatibility.md)
 
-Use the wheel, source archive and `SHA256SUMS` from the same CI run. After verifying their hashes, install the wheel from its local path with `uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl` or `pipx install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl`. Run `wechat-sticker --version` and `wechat-sticker skill doctor`. From the source archive’s `examples/sample-album/` directory, run `wechat-sticker validate` and `wechat-sticker build --offline --release review`.
+## Downloads and provenance
 
-With Python 3.12, Pillow 12.3.0 and PyYAML 6.0.3, the expected eight-sticker, five-supplementary album ZIP has SHA-256 `a05bcbe9d32860c168e7ce7ad990eb075874b9f4874e0c4913955f388e59b36e`. The release directory contains the ZIP, its unpacked files, two preview contact sheets and a release summary.
+Download the wheel or source archive together with the checksum file. On macOS, run `shasum -a 256 -c SHA256SUMS` in a directory with all three files. On Linux, use `sha256sum -c SHA256SUMS`. On Windows, use `Get-FileHash -Algorithm SHA256` on each distribution and compare the results below. [SHA256SUMS](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.1/SHA256SUMS)
 
-## Publication and discovery
+| Download | SHA-256 | PyPI provenance |
+| --- | --- | --- |
+| [Python wheel](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.1/wechat_sticker_publisher-0.2.1-py3-none-any.whl) | `1c808c86a5b812c430a53cac9f4e586e838974d64778dd8ded922f68167c40b0` | [Wheel attestation](https://pypi.org/integrity/wechat-sticker-publisher/0.2.1/wechat_sticker_publisher-0.2.1-py3-none-any.whl/provenance) |
+| [Source archive with sample](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.1/wechat_sticker_publisher-0.2.1.tar.gz) | `b9e3f94973765b278df488eb37b477f4fc33728d0eb9dc28654a24181cc71212` | [Source attestation](https://pypi.org/integrity/wechat-sticker-publisher/0.2.1/wechat_sticker_publisher-0.2.1.tar.gz/provenance) |
 
-As of 24 November 2026, the official PyPI project and Simple endpoints returned 404. A repository install with the skills CLI succeeded. The matching owner/repository/skill entry was absent from the public skills.sh directory. Recheck both services before adding badges. See the [Trusted Publishing runbook](trusted-publishing.md) for owner configuration, approval and anonymous post-publication tests.
+The protected release workflow built the distributions twice from `eb523e7f5e2dc1b28f08b454be92830be9fe9403`. Public downloads from GitHub and PyPI matched the verified workflow artifact byte-for-byte. Both Sigstore attestations passed verification against this repository. They identify `release.yml`, the release commit and workflow run 45384240002. PyPI records the publisher environment as `pypi`. [Production workflow](https://github.com/hnt119/wechat-sticker-publisher/actions/runs/45384240002) · [CI on the release tag](https://github.com/hnt119/wechat-sticker-publisher/actions/runs/45384214832)
 
-The proposed GitHub About description is “Offline-first Python CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums.” Keep the current WeChat and image-processing topics and add `agent-skills`, `python-cli`, `claude-code`, `opencode` and `deepseek-harness` when updating the listing. The existing `codex-skill` topic still describes a supported adapter.
+## Public installation checks
 
-After an approved publication, verify bare-name uv and pipx installs from production PyPI before promoting them in both READMEs and the skill reference. Check the new tag with the external installer and refresh the sample source link against the published assets. [Installation guide](agent-installation.md) · [Changelog](../CHANGELOG.md)
+On 24 November 2026, uv 0.13.9 and pipx 1.19.1 each installed version 0.2.1 from production PyPI in separate, empty environments. Both passed dependency checks. From the extracted source archive’s `examples/sample-album/` directory, each installation ran:
+
+```sh
+wechat-sticker validate
+wechat-sticker build --offline --release review
+```
+
+Both reported eight stickers and five supplementary images. Each generated album ZIP had SHA-256 `a05bcbe9d32860c168e7ce7ad990eb075874b9f4874e0c4913955f388e59b36e`, matching v0.2.0.
+
+The external `skills@1.9.0` installer discovered `hnt119/wechat-sticker-publisher@v0.2.1` and installed the tagged `SKILL.md` and all three references byte-for-byte. The skills.sh directory and search did not list this repository on the verification date. Use the GitHub tag for external installation. [Commands and scopes](agent-installation.md)

@@ -1,6 +1,6 @@
 # WeChat Sticker Publisher
 
-[简体中文](https://github.com/hnt119/wechat-sticker-publisher/blob/main/README.zh-CN.md) · [Latest stable release](https://github.com/hnt119/wechat-sticker-publisher/releases/latest)
+[![PyPI](https://img.shields.io/pypi/v/wechat-sticker-publisher)](https://pypi.org/project/wechat-sticker-publisher/) [![GitHub Release](https://img.shields.io/github/v/release/hnt119/wechat-sticker-publisher?label=GitHub%20Release)](https://github.com/hnt119/wechat-sticker-publisher/releases/latest) · [简体中文](https://github.com/hnt119/wechat-sticker-publisher/blob/main/README.zh-CN.md)
 
 An offline-first CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums. Turn illustrations or animated GIFs into upload files, Chinese submission copy, previews and an album ZIP for manual review.
 
@@ -8,14 +8,14 @@ An offline-first CLI and portable Agent Skill for preparing, validating, and pac
 
 ## Install the CLI
 
-Use Python 3.10+ and uv. Download the v0.2.1 wheel and `SHA256SUMS` together from [GitHub Releases](https://github.com/hnt119/wechat-sticker-publisher/releases) when v0.2.1 is listed there. For a pre-release build, extract the artifact from the successful [Release distributions run](https://github.com/hnt119/wechat-sticker-publisher/actions/workflows/release.yml) for the commit you want to test. Check the wheel against the checksum file, then run these commands in the download folder. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) · [Install pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
+Use Python 3.10+ and uv to install from PyPI. You can package an album without a Git checkout or an AI account. [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
 
 ```sh
-uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl
+uv tool install wechat-sticker-publisher
 wechat-sticker --version
 ```
 
-To use pipx (Python 3.11+), replace `uv tool install` with `pipx install` and use the same local wheel. If your shell cannot find `wechat-sticker`, run `uv tool update-shell` or `pipx ensurepath` and reopen the terminal. After installation the CLI works offline. [Offline and Windows setup](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/creator-guide.md) · [Development installation](https://github.com/hnt119/wechat-sticker-publisher/blob/main/CONTRIBUTING.md)
+For pipx, run `pipx install wechat-sticker-publisher` (pipx itself requires Python 3.11+). If your shell cannot find the command, run `uv tool update-shell` or `pipx ensurepath` and reopen the terminal. Packaging works offline after installation. [Install pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html) · [Windows and offline setup](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/creator-guide.md) · [Manual downloads and checksums](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/release-v0.2.1.md)
 
 ## Package your stickers
 
@@ -37,7 +37,7 @@ Install the CLI above so your agent can run `wechat-sticker`. From the album fol
 | Installer | Command |
 | --- | --- |
 | Bundled with the Python CLI, works offline | `wechat-sticker skill install --agent codex --scope project` |
-| Vercel skills CLI, downloads from GitHub | `npx skills@1.9.0 add hnt119/wechat-sticker-publisher --skill wechat-sticker-publisher --agent claude-code` |
+| Vercel skills CLI, downloads from GitHub | `npx skills@1.9.0 add hnt119/wechat-sticker-publisher@v0.2.1 --skill wechat-sticker-publisher --agent claude-code` |
 
 The external skill installer installs instructions and references. The Python CLI provides the publishing engine. Open the album folder in your agent and ask **“Package my stickers for WeChat publishing.”**
 
@@ -45,7 +45,7 @@ The native installer supports Codex, Claude Code, Gemini CLI, Cursor, OpenCode, 
 
 ## Try the complete example
 
-Extract `wechat_sticker_publisher-0.2.1.tar.gz` from the same release or workflow artifact as the wheel. In its `examples/sample-album` folder, run the two quick-start commands above. Chestnut Walk should report **TECHNICAL_PASS** for eight stickers and all five supplementary images.
+Extract the v0.2.1 source archive and run the two quick-start commands above in its `examples/sample-album` folder. Chestnut Walk should report **TECHNICAL_PASS** for eight stickers and all five supplementary images. [Download the sample archive](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.1/wechat_sticker_publisher-0.2.1.tar.gz)
 
 ## Privacy and license
 

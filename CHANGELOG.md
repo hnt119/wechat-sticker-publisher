@@ -1,10 +1,10 @@
 # Changelog
 
-## 0.2.1 · Distribution & Developer Experience (release candidate)
+## 0.2.1 · Distribution & Developer Experience · 2026-11-24
 
-- Document no-clone CLI installation from a published GitHub wheel using uv or pipx, and repository-based skill installation with the Vercel skills CLI.
+- Document no-clone CLI installation from PyPI using uv or pipx, and repository-based skill installation with the Vercel skills CLI.
 - Guide skill-first users through locating or installing the separate Python runtime with their permission. Add runtime details to `skill doctor` and actionable errors for missing dependencies.
-- Add Python package index metadata and a protected, manually approved Trusted Publishing workflow. Registry publication requires account setup and a separate release decision.
+- Add Python package index metadata and a protected, manually approved Trusted Publishing workflow. The published wheel and source archive have verified provenance. [PyPI](https://pypi.org/project/wechat-sticker-publisher/0.2.1/#files) · [GitHub Release](https://github.com/hnt119/wechat-sticker-publisher/releases/tag/v0.2.1)
 - Preserve the v0.2.0 album configuration, publishing commands, offline outputs and seven native installation adapters.
 
 ## 0.2.0 · Universal Agent Skills Support · 2026-11-19
