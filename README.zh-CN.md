@@ -8,14 +8,14 @@
 
 ## 安装命令行工具
 
-准备好 Python 3.10 或更高版本及 uv 后，执行以下命令安装已发布的 GitHub wheel。uv 会管理运行环境，无需克隆仓库或开通 AI 账号。[安装 uv](https://docs.astral.sh/uv/getting-started/installation/) · [安装 pipx](https://pipx.pypa.io/stable/installation/)
+准备好 Python 3.10 或更高版本及 uv 后，执行以下命令安装已发布的 GitHub wheel。uv 会管理运行环境，无需克隆仓库或开通 AI 账号。[安装 uv](https://docs.astral.sh/uv/getting-started/installation/) · [安装 pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
 
 ```sh
 uv tool install https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0-py3-none-any.whl
 wechat-sticker --version
 ```
 
-也可将 `uv tool install` 换成 `pipx install`，使用同一下载地址。若终端找不到 `wechat-sticker`，请按安装方式运行 `uv tool update-shell` 或 `pipx ensurepath`，再重新打开终端。安装完成后即可离线使用。[离线与 Windows 安装](docs/creator-guide.zh-CN.md) · [开发环境安装](CONTRIBUTING.md)
+也可使用 pipx（需要 Python 3.11 或更高版本）：将 `uv tool install` 换成 `pipx install`，使用同一下载地址。若终端找不到 `wechat-sticker`，请按安装方式运行 `uv tool update-shell` 或 `pipx ensurepath`，再重新打开终端。安装完成后即可离线使用。[离线与 Windows 安装](docs/creator-guide.zh-CN.md) · [开发环境安装](CONTRIBUTING.md)
 
 ## 打包自己的表情
 
