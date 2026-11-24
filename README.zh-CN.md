@@ -39,7 +39,7 @@ wechat-sticker build --offline --release first-look
 | Python 工具自带的离线安装器 | `wechat-sticker skill install --agent codex --scope project` |
 | Vercel skills CLI，从 GitHub 下载 | `npx skills@1.9.0 add hnt119/wechat-sticker-publisher@v0.2.1 --skill wechat-sticker-publisher --agent claude-code` |
 
-外部技能安装器提供指令和参考资料，实际打包由单独安装的 Python 工具完成。在智能体中打开专辑目录，输入**“帮我把这些表情打包成微信表情专辑”**。
+外部技能安装器提供指令和参考资料，实际打包由单独安装的 Python 工具完成。在智能体中打开专辑目录，输入** “帮我把这些表情打包成微信表情专辑” **。
 
 内置安装器适配 Codex、Claude Code、Gemini CLI、Cursor、OpenCode、GitHub Copilot CLI 和 DeepSeek Harness。Codex 与 OpenCode 已完成实机端到端示例打包。[安装范围与升级](docs/agent-installation.md) · [各智能体验证记录](docs/agent-compatibility.md)
 
