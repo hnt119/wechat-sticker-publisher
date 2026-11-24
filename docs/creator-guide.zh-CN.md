@@ -16,11 +16,11 @@ python -m pip install .
 
 若目标电脑完全离线，可在系统、处理器架构和 Python 版本均相同的联网电脑上运行 `python -m pip wheel . --wheel-dir wheelhouse`，将生成的整个目录拷贝至目标电脑，再在虚拟环境内执行 `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher`。
 
-如需试用现成的公开示例，请先安装命令行工具，再下载 [v0.2.0 源码压缩包](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz) 到空目录。若已安装 `tar`，可在该目录执行以下命令。
+如需试用现成的公开示例，请先安装命令行工具，再从[与 wheel 相同的版本或工作流](../README.zh-CN.md#安装命令行工具)取得 `wechat_sticker_publisher-0.2.1.tar.gz`，放入空目录。若已安装 `tar`，可在该目录执行以下命令。
 
 ```sh
-tar -xzf wechat_sticker_publisher-0.2.0.tar.gz
-cd wechat_sticker_publisher-0.2.0/examples/sample-album
+tar -xzf wechat_sticker_publisher-0.2.1.tar.gz
+cd wechat_sticker_publisher-0.2.1/examples/sample-album
 wechat-sticker validate
 wechat-sticker build --offline --release first-look
 ```

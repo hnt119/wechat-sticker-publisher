@@ -8,14 +8,14 @@
 
 ## 安装命令行工具
 
-准备好 Python 3.10 或更高版本及 uv 后，执行以下命令安装已发布的 GitHub wheel。uv 会管理运行环境，无需克隆仓库或开通 AI 账号。[安装 uv](https://docs.astral.sh/uv/getting-started/installation/) · [安装 pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
+准备好 Python 3.10 或更高版本及 uv。在 [GitHub Releases](https://github.com/hnt119/wechat-sticker-publisher/releases) 列出 v0.2.1 后，从该版本一并下载 wheel 和 `SHA256SUMS`。如需试用发布前的构建，请在 [Release distributions](https://github.com/hnt119/wechat-sticker-publisher/actions/workflows/release.yml) 中选择对应提交且运行成功的记录，下载并解压构建产物。核对 wheel 的 SHA-256 后，在下载目录中运行以下命令。[安装 uv](https://docs.astral.sh/uv/getting-started/installation/) · [安装 pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
 
 ```sh
-uv tool install https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0-py3-none-any.whl
+uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl
 wechat-sticker --version
 ```
 
-也可使用 pipx（需要 Python 3.11 或更高版本）：将 `uv tool install` 换成 `pipx install`，使用同一下载地址。若终端找不到 `wechat-sticker`，请按安装方式运行 `uv tool update-shell` 或 `pipx ensurepath`，再重新打开终端。安装完成后即可离线使用。[离线与 Windows 安装](docs/creator-guide.zh-CN.md) · [开发环境安装](CONTRIBUTING.md)
+也可使用 pipx（需要 Python 3.11 或更高版本）：将 `uv tool install` 换成 `pipx install`，使用同一个本地 wheel 文件。若终端找不到 `wechat-sticker`，请按安装方式运行 `uv tool update-shell` 或 `pipx ensurepath`，再重新打开终端。安装完成后即可离线使用。[离线与 Windows 安装](docs/creator-guide.zh-CN.md) · [开发环境安装](CONTRIBUTING.md)
 
 ## 打包自己的表情
 
@@ -45,7 +45,7 @@ wechat-sticker build --offline --release first-look
 
 ## 试做完整示例
 
-下载并解压[稳定版源码包](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz)，在其中的 `examples/sample-album` 目录运行上文的校验与打包命令。「栗子巡游」示例包含八张表情和五张配图，应显示 **TECHNICAL_PASS**。
+从同一版本或同一次工作流取得源码包 `wechat_sticker_publisher-0.2.1.tar.gz` 并解压，在其中的 `examples/sample-album` 目录运行上文的校验与打包命令。「栗子巡游」示例包含八张表情和五张配图，应显示 **TECHNICAL_PASS**。
 
 ## 隐私与许可
 

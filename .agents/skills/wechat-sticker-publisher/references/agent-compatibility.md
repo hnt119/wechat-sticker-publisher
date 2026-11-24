@@ -6,13 +6,13 @@ The project or user installation supplies these same instructions to Codex, Clau
 
 Run `wechat-sticker --help` in the shell the agent uses. If it is missing, ask whether the creator already has a tool installation or virtual environment. Start the host with that executable on its path.
 
-For a fresh installation with uv, the following published GitHub wheel contains the offline publishing engine used by this skill. It requires Python 3.10+ and access to the wheel and dependencies. Offer the command to the creator and wait for permission before executing it.
+For a fresh v0.2.1 installation with uv and Python 3.10+, offer the following command from the folder containing the verified wheel. Get the wheel and `SHA256SUMS` from the same v0.2.1 entry in [GitHub Releases](https://github.com/hnt119/wechat-sticker-publisher/releases) once listed, or from the [Release distributions run](https://github.com/hnt119/wechat-sticker-publisher/actions/workflows/release.yml) for the selected commit. Ask the creator before downloading files, installing software or fetching dependencies.
 
 ```sh
-uv tool install https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0-py3-none-any.whl
+uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl
 ```
 
-With a creator-provided local wheelhouse, a configured Python environment can instead use `python -m pip install --no-index --find-links WHEELHOUSE wechat-sticker-publisher`. Replace `WHEELHOUSE` with its local directory. Retry `wechat-sticker --help` before working on the album. The packaged CLI handles validation, briefs and exports offline.
+With a creator-provided local wheelhouse, a configured Python environment can instead use `python -m pip install --no-index --find-links WHEELHOUSE wechat-sticker-publisher==0.2.1`. Replace `WHEELHOUSE` with its local directory. Retry `wechat-sticker --help` before working on the album. The packaged CLI handles validation, briefs and exports offline.
 
 ## Choose one skill installer
 

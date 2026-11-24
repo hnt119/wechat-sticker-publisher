@@ -1,6 +1,6 @@
 # WeChat Sticker Publisher v0.2.1 — Distribution & Developer Experience
 
-This candidate makes the offline publishing workflow easier to install and diagnose. Creators can install the **published v0.2.0 GitHub wheel** using uv or pipx today. Reviewers can use the v0.2.1 wheel from this pull request’s **Release distributions** workflow. Both routes give you the `wechat-sticker` command without cloning the project or managing a virtual environment yourself.
+Version 0.2.1 makes the offline publishing workflow easier to install and diagnose. Install its wheel with uv or pipx to get the `wechat-sticker` command without cloning the project. The release workflow supplies the matching wheel, source archive and checksums for each verified commit.
 
 - The English and Chinese quick starts cover your first album, the complete Chestnut Walk example and where to find its ZIP, reports and previews.
 - The Vercel skills CLI can discover the canonical skill by GitHub repository and install it by tag or commit. The skill checks for the separate Python CLI and offers an installation route when it is missing. The bundled seven-agent installer still works offline.
@@ -8,7 +8,7 @@ This candidate makes the offline publishing workflow easier to install and diagn
 - Both Python distributions include package-index metadata, the canonical instructions, three skill references and the MIT license. The CI review workflow builds twice from the proposed commit and verifies the collected distributions. Production publication uses a separate protected job and PyPI Trusted Publishing.
 - The v0.2.0 publishing commands, album format, optional artwork providers and deterministic output are preserved. Codex and OpenCode have completed end-to-end album packaging. Other runtime results remain individually documented. [Compatibility matrix](agent-compatibility.md)
 
-## Review the candidate
+## Verify the distribution
 
 Use the wheel, source archive and `SHA256SUMS` from the same CI run. After verifying their hashes, install the wheel from its local path with `uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl` or `pipx install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl`. Run `wechat-sticker --version` and `wechat-sticker skill doctor`. From the source archive’s `examples/sample-album/` directory, run `wechat-sticker validate` and `wechat-sticker build --offline --release review`.
 

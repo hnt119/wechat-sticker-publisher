@@ -16,11 +16,11 @@ python -m pip install .
 
 For an air-gapped machine, run `python -m pip wheel . --wheel-dir wheelhouse` on a connected machine with the same Python version, operating system and architecture. Copy the wheelhouse to the offline machine and run `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher` in its virtual environment.
 
-To try the prebuilt public sample with any installed CLI, download the [v0.2.0 source archive](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz) into an empty directory. From that directory, extract and build it with these commands.
+To try the prebuilt public sample with any installed CLI, place `wechat_sticker_publisher-0.2.1.tar.gz` from the [same release or workflow artifact as the wheel](../README.md#install-the-cli) in an empty directory. From that directory, extract and build it with these commands.
 
 ```sh
-tar -xzf wechat_sticker_publisher-0.2.0.tar.gz
-cd wechat_sticker_publisher-0.2.0/examples/sample-album
+tar -xzf wechat_sticker_publisher-0.2.1.tar.gz
+cd wechat_sticker_publisher-0.2.1/examples/sample-album
 wechat-sticker validate
 wechat-sticker build --offline --release first-look
 ```

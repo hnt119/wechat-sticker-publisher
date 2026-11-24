@@ -4,18 +4,18 @@
 
 An offline-first CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums. Turn illustrations or animated GIFs into upload files, Chinese submission copy, previews and an album ZIP for manual review.
 
-![Eight stickers from Chestnut Walk, including a wave, a sprint and a nap](https://raw.githubusercontent.com/hnt119/wechat-sticker-publisher/v0.2.0/examples/sample-album/preview.png)
+![Eight stickers from Chestnut Walk, including a wave, a sprint and a nap](https://raw.githubusercontent.com/hnt119/wechat-sticker-publisher/main/examples/sample-album/preview.png)
 
 ## Install the CLI
 
-With Python 3.10+ and uv, install the published GitHub wheel. uv manages the tool environment. No checkout or AI account is required. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) · [Install pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
+Use Python 3.10+ and uv. Download the v0.2.1 wheel and `SHA256SUMS` together from [GitHub Releases](https://github.com/hnt119/wechat-sticker-publisher/releases) when v0.2.1 is listed there. For a pre-release build, extract the artifact from the successful [Release distributions run](https://github.com/hnt119/wechat-sticker-publisher/actions/workflows/release.yml) for the commit you want to test. Check the wheel against the checksum file, then run these commands in the download folder. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) · [Install pipx](https://pipx.pypa.io/stable/how-to/install-pipx.html)
 
 ```sh
-uv tool install https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0-py3-none-any.whl
+uv tool install ./wechat_sticker_publisher-0.2.1-py3-none-any.whl
 wechat-sticker --version
 ```
 
-To use pipx (Python 3.11+), replace `uv tool install` with `pipx install` and use the same wheel URL. If your shell cannot find `wechat-sticker`, run `uv tool update-shell` or `pipx ensurepath` and reopen the terminal. After installation the CLI works offline. [Offline and Windows setup](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/creator-guide.md) · [Development installation](https://github.com/hnt119/wechat-sticker-publisher/blob/main/CONTRIBUTING.md)
+To use pipx (Python 3.11+), replace `uv tool install` with `pipx install` and use the same local wheel. If your shell cannot find `wechat-sticker`, run `uv tool update-shell` or `pipx ensurepath` and reopen the terminal. After installation the CLI works offline. [Offline and Windows setup](https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/creator-guide.md) · [Development installation](https://github.com/hnt119/wechat-sticker-publisher/blob/main/CONTRIBUTING.md)
 
 ## Package your stickers
 
@@ -45,7 +45,7 @@ The native installer supports Codex, Claude Code, Gemini CLI, Cursor, OpenCode, 
 
 ## Try the complete example
 
-Download and extract the [stable source distribution](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.0/wechat_sticker_publisher-0.2.0.tar.gz). In its `examples/sample-album` folder, run the two quick-start commands above. Chestnut Walk should report **TECHNICAL_PASS** for eight stickers and all five supplementary images.
+Extract `wechat_sticker_publisher-0.2.1.tar.gz` from the same release or workflow artifact as the wheel. In its `examples/sample-album` folder, run the two quick-start commands above. Chestnut Walk should report **TECHNICAL_PASS** for eight stickers and all five supplementary images.
 
 ## Privacy and license
 

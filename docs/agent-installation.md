@@ -11,7 +11,7 @@ npx skills@1.9.0 add hnt119/wechat-sticker-publisher --list
 npx skills@1.9.0 add hnt119/wechat-sticker-publisher --skill wechat-sticker-publisher --agent claude-code
 ```
 
-To pin the source, append a published tag or full commit to the repository name, for example `hnt119/wechat-sticker-publisher@v0.2.0`. The upstream CLI can create shared copies, links and its own lockfile. Manage that installation with the same installer. Installing by GitHub repository works independently of a skills.sh directory listing. The external installer can need network access and does not install the Python CLI. [Upstream CLI](https://github.com/vercel-labs/skills)
+To pin the source, append a published tag or full commit to the repository name, such as `hnt119/wechat-sticker-publisher@v0.2.1` once that tag is available. The upstream CLI can create shared copies, links and its own lockfile. Manage that installation with the same installer. Installing by GitHub repository works independently of a skills.sh directory listing. The external installer can need network access and does not install the Python CLI. [Upstream CLI](https://github.com/vercel-labs/skills)
 
 ## Choose the scope
 
