@@ -4,9 +4,9 @@
 
 ## Installation on Windows or an offline computer
 
-Windows creators can use the same [uv or pipx tool installation](../README.md#install-the-cli) as macOS and Linux. For a development checkout or a fully offline setup, use the commands below.
+On Windows, macOS or Linux, run `uv tool install wechat-sticker-publisher` or `pipx install wechat-sticker-publisher` to install from PyPI. Run `wechat-sticker --version` to confirm the installed version. [CLI quick start](../README.md#install-the-cli)
 
-Use Python 3.10 or later. From the repository directory in PowerShell, run:
+For a development checkout, use Python 3.10 or later. Run the following commands from the repository directory in PowerShell.
 
 ```powershell
 py -m venv .venv
@@ -14,9 +14,9 @@ py -m venv .venv
 python -m pip install .
 ```
 
-For an air-gapped machine, run `python -m pip wheel . --wheel-dir wheelhouse` on a connected machine with the same Python version, operating system and architecture. Copy the wheelhouse to the offline machine and run `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher` in its virtual environment.
+For an air-gapped machine, run `python -m pip wheel --wheel-dir wheelhouse wechat-sticker-publisher==0.2.1` on a connected machine with the same Python version, operating system and architecture. Copy the wheelhouse to the offline machine and run `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher==0.2.1` in its virtual environment.
 
-To try the prebuilt public sample with any installed CLI, place `wechat_sticker_publisher-0.2.1.tar.gz` from the [same release or workflow artifact as the wheel](../README.md#install-the-cli) in an empty directory. From that directory, extract and build it with these commands.
+To try the prebuilt public sample with any installed CLI, download the v0.2.1 source archive into an empty directory, then run the following commands there. [Download the sample album and source](https://github.com/hnt119/wechat-sticker-publisher/releases/download/v0.2.1/wechat_sticker_publisher-0.2.1.tar.gz)
 
 ```sh
 tar -xzf wechat_sticker_publisher-0.2.1.tar.gz
