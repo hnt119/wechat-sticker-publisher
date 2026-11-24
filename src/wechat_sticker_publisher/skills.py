@@ -305,8 +305,12 @@ def _target(agent: str, scope: str, project: Path, layout: str, files: dict[str,
     if uninstall:
         _owned(path, agent, scope)
         return location, "uninstall"
+    if _linked(path):
+        raise ConfigError(f"Leaving linked skill in place: {path}. Use its original installer for updates.")
     if not _matches(path, _digests(files)) or _bundle_entries(path) - BUNDLE_ENTRIES:
-        raise ConfigError(f"Existing skill differs from the packaged skill: {path}")
+        raise ConfigError(f"Existing skill differs from the packaged skill: {path}. "
+                          "For an unchanged native installation, use skill uninstall with the same agent and scope, "
+                          "then install again. Preserve local edits and use the original manager for other copies.")
     return location, "reuse"
 
 

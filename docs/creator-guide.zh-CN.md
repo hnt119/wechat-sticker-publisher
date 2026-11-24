@@ -4,6 +4,8 @@
 
 ## 在 Windows 或离线电脑上安装
 
+Windows 用户可使用与 macOS 和 Linux 相同的 [uv 或 pipx 安装方法](../README.zh-CN.md#安装命令行工具)。从开发仓库安装或准备完全离线的环境，可参考以下命令。
+
 请使用 Python 3.10 或更高版本。在仓库目录打开 PowerShell，运行以下命令。
 
 ```powershell
@@ -13,6 +15,15 @@ python -m pip install .
 ```
 
 若目标电脑完全离线，可在系统、处理器架构和 Python 版本均相同的联网电脑上运行 `python -m pip wheel . --wheel-dir wheelhouse`，将生成的整个目录拷贝至目标电脑，再在虚拟环境内执行 `python -m pip install --no-index --find-links wheelhouse wechat-sticker-publisher`。
+
+如需试用现成的公开示例，请先安装命令行工具，再从[与 wheel 相同的版本或工作流](../README.zh-CN.md#安装命令行工具)取得 `wechat_sticker_publisher-0.2.1.tar.gz`，放入空目录。若已安装 `tar`，可在该目录执行以下命令。
+
+```sh
+tar -xzf wechat_sticker_publisher-0.2.1.tar.gz
+cd wechat_sticker_publisher-0.2.1/examples/sample-album
+wechat-sticker validate
+wechat-sticker build --offline --release first-look
+```
 
 ## 制作自己的专辑
 
@@ -88,13 +99,13 @@ wechat-sticker build --offline
 
 ## 智能体打包与可选作图
 
-安装命令行工具并激活其 Python 虚拟环境。在创作目录执行 `wechat-sticker skill list` 查看智能体标识，然后运行 `wechat-sticker skill install --agent codex --scope project`，将 `codex` 替换为相应标识。个人全局安装可改用 `--scope user`。在智能体的新会话中打开专辑目录，输入“帮我把这些表情打包成微信表情专辑”。按上一节的方法核对生成的 ZIP、报告和缺图说明。[安装与排错](agent-installation.md) · [兼容性实测](agent-compatibility.md) · [DeepSeek Harness 使用说明](deepseek-harness.md)
+安装命令行工具，在用于启动智能体的终端中运行 `wechat-sticker --version` 检查能否找到命令。在创作目录执行 `wechat-sticker skill list` 查看智能体标识，然后运行 `wechat-sticker skill install --agent codex --scope project`，将 `codex` 替换为相应标识。个人全局安装可改用 `--scope user`。在智能体的新会话中打开专辑目录，输入“帮我把这些表情打包成微信表情专辑”。按上一节的方法核对生成的 ZIP、报告和缺图说明。[安装与排错](agent-installation.md) · [兼容性实测](agent-compatibility.md) · [DeepSeek Harness 使用说明](deepseek-harness.md)
 
 如需使用可选的 OpenAI Images 适配器，在工具仓库运行 `python -m pip install '.[openai]'`，在本机环境中设置 `OPENAI_API_KEY` 和 `WECHAT_STICKER_IMAGE_MODEL`，再执行 `wechat-sticker build --pack ID --generate-missing --provider openai-images`。这条作图命令可能将明确选用的参考图发给服务商并产生费用。其他已安装插件可通过 `--provider NAME` 或 `WECHAT_STICKER_PROVIDER` 配合 `--generate-missing` 选择。未配置插件时，程序会记录缺项、保存离线成果并提供手动作图说明。[插件配置与接口](artwork-providers.md)
 
 ## 常见问题
 
-- **找不到命令。** 重新激活安装时使用的虚拟环境，执行 `python -m pip show wechat-sticker-publisher` 可查看安装位置。
+- **找不到命令。** 用 uv 安装的，请运行 `uv tool list` 和 `uv tool update-shell`；用 pipx 安装的，请运行 `pipx list` 和 `pipx ensurepath`。重新打开终端，运行 `wechat-sticker --version`。若通过 pip 安装在虚拟环境中，请先激活对应环境。
 - **找不到专辑或图片。** `--project` 要指向含有 `publishing-config/` 的项目。检查文件名大小写、配图名称及清单中的项目相对路径。
 - **封面透明度不合格。** 导出带真实透明背景、主体可见的 PNG。白色画布及画上去的棋盘格都是不透明像素。
 - **动态专辑数量不足。** 按不同动作计数，补充一个已完成的独立动作。相似动作、换字版本还需人工评估。

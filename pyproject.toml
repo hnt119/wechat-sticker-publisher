@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wechat-sticker-publisher"
-version = "0.2.0"
+version = "0.2.1"
 description = "An offline-first CLI and portable Agent Skill for preparing, validating, and packaging WeChat sticker albums."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -12,6 +12,22 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{name = "WeChat Sticker Publisher contributors"}]
 dependencies = ["Pillow>=11,<13", "PyYAML>=6,<7"]
+keywords = ["wechat", "stickers", "agent-skills", "image-processing", "offline"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+]
+
+[project.urls]
+Repository = "https://github.com/hnt119/wechat-sticker-publisher"
+Documentation = "https://github.com/hnt119/wechat-sticker-publisher/blob/main/docs/creator-guide.md"
+Issues = "https://github.com/hnt119/wechat-sticker-publisher/issues"
+Changelog = "https://github.com/hnt119/wechat-sticker-publisher/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 openai = ["openai>=2,<3"]

@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.2.0 · Universal Agent Skills Support (release candidate)
+## 0.2.1 · Distribution & Developer Experience (release candidate)
+
+- Document no-clone CLI installation from a published GitHub wheel using uv or pipx, and repository-based skill installation with the Vercel skills CLI.
+- Guide skill-first users through locating or installing the separate Python runtime with their permission. Add runtime details to `skill doctor` and actionable errors for missing dependencies.
+- Add Python package index metadata and a protected, manually approved Trusted Publishing workflow. Registry publication requires account setup and a separate release decision.
+- Preserve the v0.2.0 album configuration, publishing commands, offline outputs and seven native installation adapters.
+
+## 0.2.0 · Universal Agent Skills Support · 2026-11-19
 
 - Bundle one MIT-licensed Agent Skill with the offline CLI in the wheel and source archive.
 - Add project and user installation, inspection and safe removal for Codex, Claude Code, Gemini CLI, Cursor, OpenCode, GitHub Copilot CLI and DeepSeek Harness (`dsh`).

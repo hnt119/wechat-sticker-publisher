@@ -4,16 +4,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import platform
 import sys
 from datetime import date
 from pathlib import Path
 
 from . import __version__
-from . import skills
-from .imaging import inspect_image
-from .metadata import EXTENSIONS, ConfigError, albums, initialize, project_path
-from .packaging import build, markdown_report
-from .workflow import compare_albums, evaluate
 
 
 def _location(p: argparse.ArgumentParser) -> None:
@@ -29,6 +25,8 @@ def _select(p: argparse.ArgumentParser) -> None:
 
 
 def parser() -> argparse.ArgumentParser:
+    from . import skills
+
     p = argparse.ArgumentParser(prog="wechat-sticker", description="Inventory, validate and package sticker albums locally.")
     _location(p)
     p.add_argument("--version", action="version", version=__version__)
@@ -78,7 +76,20 @@ def _emit(data: object) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = parser().parse_args(argv)
+    try:
+        args = parser().parse_args(argv)
+        from .imaging import inspect_image
+        from .metadata import EXTENSIONS, ConfigError, albums, initialize, project_path
+        from .packaging import build, markdown_report
+        from .workflow import compare_albums, evaluate
+    except ModuleNotFoundError as exc:
+        dependency = {"PIL": "Pillow", "yaml": "PyYAML"}.get(exc.name)
+        if dependency is None:
+            raise
+        print(f"wechat-sticker: Missing {dependency} in {sys.executable}. "
+              "Reinstall the toolkit with its dependencies using the tool or environment "
+              "that installed it. For offline setup, use your local wheelhouse.", file=sys.stderr)
+        return 2
     root = getattr(args, "project", Path.cwd()).resolve()
     try:
         if args.command == "skill":
@@ -139,6 +150,8 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _skill(args: argparse.Namespace, project: Path) -> int:
+    from . import skills
+
     agent = skills.ALIASES.get(args.agent, args.agent)
     if args.action in ("install", "uninstall"):
         result = skills.change(agent, args.scope, project, args.layout, args.dry_run, args.action == "uninstall")
@@ -152,10 +165,19 @@ def _skill(args: argparse.Namespace, project: Path) -> int:
     rows = [skills.inspect(name, project, doctor) for name in ([agent] if agent else skills.AGENTS)]
     report = {"agents": rows}
     if doctor:
+        from PIL import __version__ as pillow_version
+        from yaml import __version__ as yaml_version
+
+        report["runtime"] = {"publisher": __version__, "python": platform.python_version(),
+                             "executable": sys.executable, "Pillow": pillow_version, "PyYAML": yaml_version}
         report["skill_resources"] = sorted(skills.skill_files())
     if args.json:
         _emit(report)
     else:
+        if doctor:
+            info = report["runtime"]
+            print(f"wechat-sticker {info['publisher']} · Python {info['python']} ({info['executable']})")
+            print(f"Pillow {info['Pillow']} · PyYAML {info['PyYAML']}")
         for row in rows:
             print(row["agent"])
             for location in row["locations"]:
